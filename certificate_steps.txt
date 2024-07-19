@@ -1,0 +1,44 @@
+Step-01: Generate Self Signed SSL
+
+# Change to Directory
+cd terraform-manifests/ssl-self-signed
+
+# Generate Self Signed Certificate and Private Key
+openssl req -newkey rsa:2048 -nodes -keyout httpd.key -x509 -days 7300 -out httpd.crt
+
+# Sample Output
+Kalyans-Mac-mini:ssl-self-signed kalyanreddy$ openssl req -newkey rsa:2048 -nodes -keyout httpd.key -x509 -days 7300 -out httpd.crt
+Generating a 2048 bit RSA private key
+...................+++
+.....................................+++
+writing new private key to 'httpd.key'
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) []:IN
+State or Province Name (full name) []:Telangana
+Locality Name (eg, city) []:Hyderabad
+Organization Name (eg, company) []:stacksimplify
+Organizational Unit Name (eg, section) []:Cloud Courses
+Common Name (eg, fully qualified host name) []:terraformguru.com
+Email Address []:stacksimplify@gmail.com
+Kalyans-Mac-mini:ssl-self-signed kalyanreddy$ 
+
+# Verify files 
+ls -lrta
+
+Step-02: Convert SSL Certificate, Key to PFX
+
+# Change to Directory
+cd terraform-manifests/ssl-self-signed
+
+# Generate PFX file
+openssl pkcs12 -export -out httpd.pfx -inkey httpd.key -in httpd.crt -passout pass:kalyan
+
+# Verify File
+ls -lrta httpd.pfx
